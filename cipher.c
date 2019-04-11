@@ -1,10 +1,18 @@
-/*---------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 //Header files:
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-/*---------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+/* Terminal commands:
+ls - dispaly all files in current directory
+cd - current directory eg cd CipherTask changes to the "CipherTask" folder
+gcc cipher.c -compile cipher.c file
+./a.out - run program
+*/
+
 //Function prototypes:
+int countWords(char *base, char target[100][20]);
 void menu(void);                                                                                //menu selection
 //Tasks:
 void task1(void);
@@ -13,13 +21,13 @@ void task3(void);
 void task4(void);
 void task5(void);
 void task6(void);
-/*---------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 //MAIN (Calling the menu fuction):
 int main()  {
     menu();
     return 0;
 }
-/*---------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 //Function definitions: 
 //Menu
 void menu(void) {
@@ -53,7 +61,7 @@ void menu(void) {
     }   while(menuInput!=1 && menuInput!=2 && menuInput!=3 && menuInput!=4 && menuInput!=5 && menuInput!=6 && menuInput!=7);    //checks if input is valid (do while loop was not functioning)
     return;
 }
-/*---------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 // 1. Rotation encryption (given text & key):
 void task1(void) {                                                                                     
     int i, key;                                                                                 //"i" is a counter (index), "key" is the amount of rotation
@@ -93,7 +101,7 @@ void task1(void) {
     } while(a != 1);  
     return;
 }
-/*---------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 // 2. Rotation decryption (given text & key):
 void task2(void) {                                                                                  
     int i, key;                                                                                 //"i" is a counter (index), "key" is the amount of rotation
@@ -133,7 +141,7 @@ void task2(void) {
     } while(a != 1);  
     return;
 }
-/*---------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 // 3. Substitution encryption (given text & key):
 void task3(void) {
     int i, k;                                                                                   //counters
@@ -176,7 +184,7 @@ void task3(void) {
     } while(a != 1);  
     return;
 }
-/*---------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 // 4. Substitution decryption (given text & key);
 void task4(void)    {
     int i, k;                                                                                   //counters
@@ -219,55 +227,63 @@ void task4(void)    {
     } while(a != 1);  
     return;
 }
-/*---------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 // 5. Roation decryption (given only text):
 void task5(void) {
-    int i, j, b, k = 1;                                                                            //counters
+    int i, n, m, j, b, k;                                                                            //counters
+    int x = 0, y = 0, z = 0;
     char str[100];
     char line[128];
+    char sentence[100][20];
     printf("The decryption of text encrypted via a subtitution cipher, given the text only (no key):\n\n");
     printf("Enter the text to be decrypted.\n   Text: ");
     scanf(" %[^\n]%*c", str);
-    for(j = 0; j < strlen(str); j++)    {                                                       //counts number of words
-         if ((int)str[j] == 32)   {
-            k++;
-        }
-    }
     FILE *dictionary;
     dictionary = fopen("dictionary.txt", "r");
-    if(dictionary == NULL)   {
-            printf("dictionary file failed to open\n");
-            return;
-        }
-    for(b = 0; b < 10; b++) {
-        fscanf(dictionary, "%s", line);
-        //printf("%s", line);
-        for(i = 0; i < 25; i++)    {                                                                //checks all 26 rotations 
-            for(j = 0; j < strlen(str); j++)    {
-                if(str[j] >= 97 && str[j] <= 122)   {                                               //checks for lower case letters
-                    if((int)str[j] + 1 > 122)   {
-                        str[j] -= 26;
+	n = countWords(str, sentence);
+    for(m = 0; m <= 1; m++) {
+        for(b = 0; b <= 10000; b++) {
+            fscanf(dictionary, "%s", line);
+            for(i = 0; i < 25; i++)    {                                                                //checks all 26 rotations 
+                for(j = 0; j < strlen(sentence[m]); j++)    {
+                    if(sentence[m][j] >= 97 && sentence[m][j] <= 122)   {                                               //checks for lower case letters
+                        if((int)sentence[m][j] + 1 > 122)   {
+                            sentence[m][j] -= 26;
+                        }
+                        sentence[m][j]++;
+                    } else if(sentence[m][j] >= 65 && sentence[m][j] <= 90)   {                                         //checks for upper case letters
+                        if((int)sentence[m][j] + 1 > 90)   {
+                            sentence[m][j] -= 26;
+                        }
+                        sentence[m][j]++;
                     }
-                    str[j] = str[j] + 1;
-                } else if(str[j] >= 65 && str[j] <= 90)   {                                         //checks for upper case letters
-                    if((int)str[j] + 1 > 90)   {
-                        str[j] -= 26;
-                    }
-                    str[j]++;
                 }
+                if(strcasecmp(sentence[0], line) == 0) {
+                    printf("MATCH with word: %s\n", line);
+                    for(k = 0; k < strlen(str); k++)    {
+                        if(str[k] >= 97 && str[k] <= 122)   {
+                            if((int)str[k] + i > 122)   {
+                                str[k] -= 26;
+                            }
+                            str[k] += i;
+                        } else if(str[k] >= 65 && str[k] <= 90)   {
+                            if((int)str[k] + i > 90)   {
+                                str[k] -= 26;
+                            }
+                            str[k] += i;
+                            break;
+                            break;
+                    }
+                }
+                printf("The encrypted message reads: %s\n\n", str);
             }
-            if(strcasecmp(str, line) == 0) {
-                
-                printf("The decrypted message reads: %s\n", str);
-                fclose(dictionary);
-                return;
-            }
-            //printf("   %s\n", str);
         }
     }
+}
+
     static int a = 0;                                                                           //option to return to main menu
     do {
-        printf("Enter 1 to return to the main menu or enter anything else to exit the program:\n   Selction: ");
+        printf("\nEnter 1 to return to the main menu or enter anything else to exit the program:\n   Selction: ");
         scanf("%d", &a);
         if(a == 1)  {
             menu();
@@ -277,7 +293,7 @@ void task5(void) {
     } while(a != 1);  
     return;
 }
-/*---------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 // 6. Substitution decryption (give only text):
 void task6(void) {
     printf("6");
@@ -293,4 +309,21 @@ void task6(void) {
     } while(a != 1);  
     return;
 }
-/*---------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+//Function for reading words:
+int countWords(char *base, char target[100][20])    {
+	int n = 0, i, j = 0;	
+	for(i = 0; i < 50; i++)  {
+		if(base[i] != ' ')    {
+			target[n][j++] = base[i];
+		} else    {
+			target[n][j++] = '\0';       //insert NULL
+			n++;
+			j = 0;
+		}
+		if(base[i] == '\0')   {
+		    break;
+	    }
+	}
+	return n;
+}
