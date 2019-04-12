@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <ctype.h>
 /*---------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 /* Terminal commands:
 ls - dispaly all files in current directory
@@ -73,16 +74,16 @@ void task1(void) {
     scanf("%d", &key);                                                                          //assigns the input text to the array "str[]"
     if(key >= 0 && key < 26)    {
         for(i = 0; i < strlen(str); i++)   {                                                    //converts each letter of the input string to the encrypted letter                                                                     //checks for a positive key
-            if((int)str[i] >= 97 && (int)str[i] <= 122)    {                                //checks for lower-case letters
-                if((int)str[i] + key > 122)    {                                            //checks if the letter is bigger than 'z'
-                    str[i] -= 26;                                                           //subtracts 26 to turn 'z + 1' into 'a'
+            if((int)str[i] >= 97 && (int)str[i] <= 122)    {                                    //checks for lower-case letters
+                if((int)str[i] + key > 122)    {                                                //checks if the letter is bigger than 'z'
+                    str[i] -= 26;                                                               //subtracts 26 to turn 'z + 1' into 'a'
                 }
-                str[i] = str[i] + key - 32;                                                 //adds the value of "key" to the ASCII code of the letter
-            } else if((int)str[i] >= 65 && (int)str[i] <= 90)  {                            //checks for upper-case letters
-                if((int)str[i] + key > 90)    {                                             //checks if the letter is bigger than 'Z'
-                    str[i] -= 26;                                                           //subtracts 26 to turn 'Z + 1' into 'A'
+                str[i] = str[i] + key - 32;                                                     //adds the value of "key" to the ASCII code of the letter
+            } else if((int)str[i] >= 65 && (int)str[i] <= 90)  {                                //checks for upper-case letters
+                if((int)str[i] + key > 90)    {                                                 //checks if the letter is bigger than 'Z'
+                    str[i] -= 26;                                                               //subtracts 26 to turn 'Z + 1' into 'A'
                 }
-                str[i] += key;                                                              //adds the value of "key" to the ASCII code of the letter
+                str[i] += key;                                                                  //adds the value of "key" to the ASCII code of the letter
             }
         }
         printf("\nThe encrypted message reads: %s\n\n", str);                                   //prints the encrypted message
@@ -230,67 +231,116 @@ void task4(void)    {
 /*---------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 // 5. Roation decryption (given only text):
 void task5(void) {
-    int i, n, m, j, b, k;                                                                            //counters
+    int a, b, c, n;
+    char str[100];                                       //input sentence to be encrypted
+    char line[128];                                      //each dictionary word
+    char sentence[100][20];                               //sentence broken into 100 words each with 20 characters
+    printf("The decryption of text encrypted via a subtitution cipher, given the text only (no key):\n\n");
+    printf("Enter the text to be decrypted.\n   Text: ");
+    scanf(" %[^\n]%*c", str);
+    FILE* dictionary;
+    dictionary = fopen("dictionary.txt", "r");
+	for(a = 0; a < strlen(str); a++)                                   //changes the input text to all capitals
+        str[a] = toupper(str[a]);
+    n = countWords(str, sentence);
+    printf("%s %s %s", sentence[0], sentence[1], sentence[2]);
+        
+    for(a = 0; a <= 2; a++) {                                                                //for the first three words of the sentence
+        for(b = 0; b < strlen(sentence[a]); b++)    {                                        //for every word of the sentence
+            for(c = 0; c < 26; c++) {                                                        //for every rotation possible
+                if((int)sentence[a][b] >= 65 && (int)sentence[a][b] <= 90)  {
+                    if((int)sentence[a][b]++ )                    
+                }
+            }        
+        }
+    }   
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    /*int i, n, m, j, b, k;                                                                            //counters
     int x = 0, y = 0, z = 0;
     char str[100];
     char line[128];
     char sentence[100][20];
+    char check1[20], check2[20];
     printf("The decryption of text encrypted via a subtitution cipher, given the text only (no key):\n\n");
     printf("Enter the text to be decrypted.\n   Text: ");
     scanf(" %[^\n]%*c", str);
     FILE *dictionary;
     dictionary = fopen("dictionary.txt", "r");
 	n = countWords(str, sentence);
-    for(m = 0; m <= 1; m++) {
-        for(b = 0; b <= 10000; b++) {
-            fscanf(dictionary, "%s", line);
-            for(i = 0; i < 25; i++)    {                                                                //checks all 26 rotations 
-                for(j = 0; j < strlen(sentence[m]); j++)    {
-                    if(sentence[m][j] >= 97 && sentence[m][j] <= 122)   {                                               //checks for lower case letters
-                        if((int)sentence[m][j] + 1 > 122)   {
-                            sentence[m][j] -= 26;
-                        }
-                        sentence[m][j]++;
-                    } else if(sentence[m][j] >= 65 && sentence[m][j] <= 90)   {                                         //checks for upper case letters
-                        if((int)sentence[m][j] + 1 > 90)   {
-                            sentence[m][j] -= 26;
-                        }
-                        sentence[m][j]++;
+    for(b = 0; b <= 10000; b++) {
+        fscanf(dictionary, "%s", line);
+        for(i = 0; i < 26; i++)    {                                                                //checks all 26 rotations 
+            for(j = 0; j < strlen(sentence[0]); j++)    {
+                if(sentence[0][j] >= 97 && sentence[0][j] <= 122)   {                                               //checks for lower case letters
+                    if((int)sentence[0][j] + 1 > 122)   {
+                        sentence[0][j] -= 26;
                     }
-                }
-                if(strcasecmp(sentence[0], line) == 0) {
-                    printf("MATCH with word: %s\n", line);
-                    for(k = 0; k < strlen(str); k++)    {
-                        if(str[k] >= 97 && str[k] <= 122)   {
-                            if((int)str[k] + i > 122)   {
-                                str[k] -= 26;
+                    sentence[0][j]++;
+                } else if(sentence[0][j] >= 65 && sentence[0][j] <= 90)   {                                         //checks for upper case letters
+                            if((int)sentence[0][j] + 1 > 90)   {
+                                sentence[0][j] -= 26;
                             }
-                            str[k] += i;
-                        } else if(str[k] >= 65 && str[k] <= 90)   {
-                            if((int)str[k] + i > 90)   {
-                                str[k] -= 26;
-                            }
-                            str[k] += i;
-                            break;
-                            break;
-                    }
-                }
-                printf("The encrypted message reads: %s\n\n", str);
+                        sentence[0][j]++;
+                        }
             }
         }
+        sentence[0] = check1;
+        sentence[1] = check2;
+        if(strcasecmp(sentence[0], line) == 0) {
+            printf("\nMATCH with the word: '%s'\n", line);
+            for(k = 0; k < strlen(str); k++)    {
+                if(str[k] >= 97 && str[k] <= 122)   {
+                    if((int)str[k] + i > 122)   {
+                        str[k] -= 26;
+                    }
+                    str[k] += i;
+                    } else  if(str[k] >= 65 && str[k] <= 90)   {
+                                if((int)str[k] + i > 90)   {
+                                    str[k] -= 26;
+                                }
+                            str[k] += i;
+                            break;
+                            }
+            }
+        printf("The encrypted message reads: %s\n\n", str);
+        }
     }
-}
-
-    static int a = 0;                                                                           //option to return to main menu
+    */
+    static int z = 0;                                                                           //option to return to main menu
     do {
         printf("\nEnter 1 to return to the main menu or enter anything else to exit the program:\n   Selction: ");
-        scanf("%d", &a);
-        if(a == 1)  {
+        scanf("%d", &z);
+        if(z == 1)  {
             menu();
         } else  {
             exit(0);
         }
-    } while(a != 1);  
+    } while(z != 1);  
     return;
 }
 /*---------------------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -317,7 +367,7 @@ int countWords(char *base, char target[100][20])    {
 		if(base[i] != ' ')    {
 			target[n][j++] = base[i];
 		} else    {
-			target[n][j++] = '\0';       //insert NULL
+			target[n][j++] = '\0';       
 			n++;
 			j = 0;
 		}
