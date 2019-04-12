@@ -249,16 +249,15 @@ void task5(void) {
     for(a = 0; a < 25; a++)    {                                        
         for(b = 0; b < strlen(sentence[0]); b++) {                                                        
             if((int)sentence[0][b] >= 65 && (int)sentence[0][b] <= 90)   {                                         //checks for upper case letters
-                if((int)sentence[0][b] + 1 > 90)   {
+                if((int)sentence[0][b] + 1 > 90)   
                     sentence[0][b] -= 26;
-                }
                 sentence[0][b]++;
             }
             printf("%s\n", sentence[0]);
-                for(c = 0; c < 10000; c++)   {
-                    if(strcasecmp(sentence[0], words[c]) == 0)  {
-                        printf("MATCH '%s' with the word '%s'\n", sentence[0], words[c]);
-                        break;
+            for(c = 0; c < 10000; c++)   {
+                if(strcasecmp(sentence[0], words[c]) == 0)  {
+                    printf("MATCH '%s' with the word '%s'\n", sentence[0], words[c]);
+                        break; //PUT DECRYPTION OF ENTIRE SENTENCEE HERE
                 }
             }
         }
