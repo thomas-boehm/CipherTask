@@ -253,12 +253,12 @@ void task5(void) {
                     sentence[0][b] -= 26;
                 }
                 sentence[0][b]++;
-                printf("%s\n", sentence[0]);
+            }
+            printf("%s\n", sentence[0]);
                 for(c = 0; c < 10000; c++)   {
                     if(strcasecmp(sentence[0], words[c]) == 0)  {
                         printf("MATCH '%s' with the word '%s'\n", sentence[0], words[c]);
                         break;
-                    }
                 }
             }
         }
