@@ -235,7 +235,7 @@ void task5(void) {
     char str[100];                                       //input sentence to be encrypted
     char line[128];                                      //each dictionary word
     char sentence[100][20];                               //sentence broken into 100 words each with 20 characters
-    char dictionary[10000][20];
+    char words[10000][20];
     printf("The decryption of text encrypted via a subtitution cipher, given the text only (no key):\n\n");
     printf("Enter the text to be decrypted.\n   Text: ");
     scanf(" %[^\n]%*c", str);
@@ -243,28 +243,30 @@ void task5(void) {
     dictionary = fopen("dictionary.txt", "r");
 	for(a = 0; a < strlen(str); a++)                                   //changes the input text to all capitals
         str[a] = toupper(str[a]);
-    for(a = 0; a < 10000; a++)
-        fscanf(dictionary, "%s", dictionary[a]);
-    n = countWords(str, sentence);                                                             
+    n = countWords(str, sentence); 
+    for(a = 0; a < 100; a++)
+        fscanf(dictionary, "%s", words[a]);                                                     
     for(a = 0; a < 25; a++)    {                                        
         for(b = 0; b < strlen(sentence[0]); b++) {                                                        
-            if((int)sentence[0][b] >= 65 && (int)sentence[0][b] <= 90)  {
-                if((int)sentence[0][b] + 1 > 90) 
+            if((int)sentence[0][b] >= 65 && (int)sentence[0][b] <= 90)   {                                         //checks for upper case letters
+                if((int)sentence[0][b] + 1 > 90)   {
                     sentence[0][b] -= 26;
-            (int)sentence[0][b]++; 
+                }
+                sentence[0][b]++;
+                printf("%s\n", sentence[0]);
+                for(c = 0; c < 10000; c++)   {
+                    if(strcasecmp(sentence[0], words[c]) == 0)  {
+                        printf("MATCH '%s' with the word '%s'\n", sentence[0], words[c]);
+                        break;
+                    }
+                }
             }
-        }
-        for(c = 0; c < ; c++)   {
-            
         }
     }
 
     
-        
-            printf("%s\n", line); 
-            if(strcasecmp(sentence[0], line) == 1)  {
-                printf("MATCH '%s' with the word '%s'\n", sentence[0], line);
-                break;
+    
+            
 
      
  
