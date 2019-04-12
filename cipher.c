@@ -231,7 +231,7 @@ void task4(void)    {
 /*---------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 // 5. Roation decryption (given only text):
 void task5(void) {
-    int a, b, c, n;
+    int a, b, c, d, n;
     char str[100];                                       //input sentence to be encrypted
     char line[128];                                      //each dictionary word
     char sentence[100][20];                               //sentence broken into 100 words each with 20 characters
@@ -243,19 +243,25 @@ void task5(void) {
 	for(a = 0; a < strlen(str); a++)                                   //changes the input text to all capitals
         str[a] = toupper(str[a]);
     n = countWords(str, sentence);
-    printf("%s %s %s", sentence[0], sentence[1], sentence[2]);
-        
-    for(a = 0; a <= 2; a++) {                                                                //for the first three words of the sentence
-        for(b = 0; b < strlen(sentence[a]); b++)    {                                        //for every word of the sentence
-            for(c = 0; c < 26; c++) {                                                        //for every rotation possible
-                if((int)sentence[a][b] >= 65 && (int)sentence[a][b] <= 90)  {
-                    if((int)sentence[a][b]++ )                    
+    for(a = 0; a <= 10; a++) {
+        fscanf(dictionary, "%s", line);
+        printf("%s\n", line);                                                              
+        for(b = 0; b < 25; b++)    {                                        
+            for(c = 0; c < strlen(sentence[0]); c++) {                                                        
+                if((int)sentence[0][c] >= 65 && (int)sentence[0][c] <= 90)  {
+                    if((int)sentence[0][c] + 1 > 90) 
+                        sentence[0][c] -= 26;
+                (int)sentence[0][c]++; 
                 }
-            }        
+                
+                }
+            }if(strcasecmp(sentence[0], line) == 1)  {
+                    printf("MATCH '%s' with the word '%s'\n", sentence[0], line);
         }
-    }   
-    
-
+    } 
+ 
+ 
+ 
     
     
     
