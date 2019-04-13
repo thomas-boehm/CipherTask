@@ -234,8 +234,8 @@ void task5(void) {
     int a, b, c, d, n;
     char str[100];                                       //input sentence to be encrypted
     char line[128];                                      //each dictionary word
-    char sentence[100][20];                               //sentence broken into 100 words each with 20 characters
-    char words[10000][20];
+    char sentence[100][20];                               //sentence broken into 100 words each with 20 characters max
+    char words[10000][20];                               //the dictionary is scanned into a local 2D array
     printf("The decryption of text encrypted via a subtitution cipher, given the text only (no key):\n\n");
     printf("Enter the text to be decrypted.\n   Text: ");
     scanf(" %[^\n]%*c", str);
@@ -243,22 +243,27 @@ void task5(void) {
     dictionary = fopen("dictionary.txt", "r");
 	for(a = 0; a < strlen(str); a++)                                   //changes the input text to all capitals
         str[a] = toupper(str[a]);
-    n = countWords(str, sentence); 
+    n = countWords(str, sentence);                                      //reads the input sentence into seperate words
     for(a = 0; a < 100; a++)
-        fscanf(dictionary, "%s", words[a]);                                                     
-    for(a = 0; a < 25; a++)    {                                        
-        for(b = 0; b < strlen(sentence[0]); b++) {                                                        
-            if((int)sentence[0][b] >= 65 && (int)sentence[0][b] <= 90)   {                                         //checks for upper case letters
-                if((int)sentence[0][b] + 1 > 90)   
-                    sentence[0][b] -= 26;
-                sentence[0][b]++;
+        fscanf(dictionary, "%s", words[a]);                            //scans dictionary file and stores words inside local array                                                   
+    for(a = 0; a < 25; a++)    {                                        //for every possible rotation                                      
+        for(b = 0; b < strlen(sentence[0]); b++) {                                      //for each individual letter of the input string                                                  
+            if((int)sentence[0][b] >= 65 && (int)sentence[0][b] <= 90)   {                                         //checks for upper case letters only
+                if((int)sentence[0][b] + 1 > 90)                                                    //checks if a rotation from 'z' to 'a' is necessary  
+                    sentence[0][b] -= 26;                                                       
+                sentence[0][b]++;                                                                   //rotates the letter
             }
-            printf("%s\n", sentence[0]);
-            for(c = 0; c < 10000; c++)   {
-                if(strcasecmp(sentence[0], words[c]) == 0)  {
-                    printf("MATCH '%s' with the word '%s'\n", sentence[0], words[c]);
-                        break; //PUT DECRYPTION OF ENTIRE SENTENCEE HERE
-                }
+        }
+        printf("%s\n", sentence[0]);                                                                    //prints the string (TEMP)
+        for(c = 0; c < 10000; c++)   {                                                          //for every word of the imported dictionary
+            if(strcasecmp(sentence[0], words[c]) == 0)  {                                           //check if the first word of the sentence matches a word
+                printf("MATCH '%s' with the word '%s'\n", sentence[0], words[c]);
+                
+                
+                
+                
+                
+                break; //PUT DECRYPTION OF ENTIRE SENTENCEE HERE
             }
         }
     }
