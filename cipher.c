@@ -231,7 +231,7 @@ void task4(void)    {
 /*---------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 // 5. Roation decryption (given only text):
 void task5(void) {
-    int a, b, c, d, e, n;
+    int a, b, c, d, e, f, m = 0, n;
     char str[100];                                       //input sentence to be encrypted
     char line[128];                                      //each dictionary word
     char sentence[100][20];                               //sentence broken into 100 words each with 20 characters max
@@ -244,9 +244,9 @@ void task5(void) {
 	for(a = 0; a < strlen(str); a++)                                   //changes the input text to all capitals
         str[a] = toupper(str[a]);
     n = countWords(str, sentence);                                      //reads the input sentence into seperate words
-    for(a = 0; a < 100; a++)
+    for(a = 0; a < 10000; a++)
         fscanf(dictionary, "%s", words[a]);                            //scans dictionary file and stores words inside local array                                                   
-    for(a = 0; a < 25; a++)    {                                        //for every possible rotation                                      
+    for(a = 1; a < 26; a++)    {                                        //for every possible rotation                                      
         for(b = 0; b < strlen(sentence[0]); b++) {                                      //for each individual letter of the input string                                                  
             if((int)sentence[0][b] >= 65 && (int)sentence[0][b] <= 90)   {                                         //checks for upper case letters only
                 if((int)sentence[0][b] + 1 > 90)                                                    //checks if a rotation from 'z' to 'a' is necessary  
@@ -254,117 +254,33 @@ void task5(void) {
                 sentence[0][b]++;                                                                   //rotates the letter
             }
         }
-        //printf("%s\n", sentence[0]);                                                                    //prints the string (TEMP)
+        //printf("%d. %s\n", a, sentence[0]);                                                                    //prints the string (TEMP)
         for(c = 0; c < 10000; c++)   {                                                          //for every word of the imported dictionary
             if(strcasecmp(sentence[0], words[c]) == 0)  {                                           //check if the first word of the sentence matches a word
-                //printf("MATCH '%s' with the word '%s'\n", sentence[0], words[c]);
+                //printf("MATCH '%s' with the word '%s'\n", sentence[0], words[c]);                 //displays which word matched with what (TEMP)
                 for(d = 0; d < strlen(sentence[1]); d++)    {
                     if((int)sentence[1][d] >= 65 && (int)sentence[1][d] <= 90)  {
-                        if((int)sentence[1][d] + a + 1 > 90)
+                        if((int)sentence[1][d] + a > 90)
                             sentence[1][d] -= 26;
-                        sentence[1][d] += a + 1;
+                        sentence[1][d] += a;
                     }
                 }
-                for(e = 0; e < 10000; e++)  {
-                    if(strcasecmp(sentence[1], words[e]) == 0)    {
-                        for(f = 0; f < strlen(str); f++)    {
+                for(e = 0; e < 10000; e++)  {                                               //checks second word
+                    if(strcasecmp(sentence[1], words[e]) == 0)    {  
+                        for(f = 0; f < strlen(str); f++)    {                                   //decrypts entire sentence
                             if((int)str[f] >= 65 && (int)str[f] <= 90)  {
-                                if((int)str[f] + a + 1 > 90)
+                                if((int)str[f] + a > 90)
                                     str[f] -= 26;
-                            str[f] += a + 1;
+                            str[f] += a;
                             }
-                        }   
-                    }
-                        printf("\n   Decrypted message: %s\n", str);
-                }
-                break;
-            }
-        }
-    }
-
-    
-    
-            
-
-     
- 
- 
- 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    /*int i, n, m, j, b, k;                                                                            //counters
-    int x = 0, y = 0, z = 0;
-    char str[100];
-    char line[128];
-    char sentence[100][20];
-    char check1[20], check2[20];
-    printf("The decryption of text encrypted via a subtitution cipher, given the text only (no key):\n\n");
-    printf("Enter the text to be decrypted.\n   Text: ");
-    scanf(" %[^\n]%*c", str);
-    FILE *dictionary;
-    dictionary = fopen("dictionary.txt", "r");
-	n = countWords(str, sentence);
-    for(b = 0; b <= 10000; b++) {
-        fscanf(dictionary, "%s", line);
-        for(i = 0; i < 26; i++)    {                                                                //checks all 26 rotations 
-            for(j = 0; j < strlen(sentence[0]); j++)    {
-                if(sentence[0][j] >= 97 && sentence[0][j] <= 122)   {                                               //checks for lower case letters
-                    if((int)sentence[0][j] + 1 > 122)   {
-                        sentence[0][j] -= 26;
-                    }
-                    sentence[0][j]++;
-                } else if(sentence[0][j] >= 65 && sentence[0][j] <= 90)   {                                         //checks for upper case letters
-                            if((int)sentence[0][j] + 1 > 90)   {
-                                sentence[0][j] -= 26;
-                            }
-                        sentence[0][j]++;
                         }
-            }
-        }
-        sentence[0] = check1;
-        sentence[1] = check2;
-        if(strcasecmp(sentence[0], line) == 0) {
-            printf("\nMATCH with the word: '%s'\n", line);
-            for(k = 0; k < strlen(str); k++)    {
-                if(str[k] >= 97 && str[k] <= 122)   {
-                    if((int)str[k] + i > 122)   {
-                        str[k] -= 26;
+                        printf("\n   Decrypted message: %s\n", str);
+                        break;
                     }
-                    str[k] += i;
-                    } else  if(str[k] >= 65 && str[k] <= 90)   {
-                                if((int)str[k] + i > 90)   {
-                                    str[k] -= 26;
-                                }
-                            str[k] += i;
-                            break;
-                            }
+                } 
             }
-        printf("The encrypted message reads: %s\n\n", str);
         }
     }
-    */
     static int z = 0;                                                                           //option to return to main menu
     do {
         printf("\nEnter 1 to return to the main menu or enter anything else to exit the program:\n   Selction: ");
@@ -410,4 +326,4 @@ int countWords(char *base, char target[100][20])    {
 	    }
 	}
 	return n;
-}
+}	
