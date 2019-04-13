@@ -231,7 +231,7 @@ void task4(void)    {
 /*---------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 // 5. Roation decryption (given only text):
 void task5(void) {
-    int a, b, c, d, n;
+    int a, b, c, d, e, n;
     char str[100];                                       //input sentence to be encrypted
     char line[128];                                      //each dictionary word
     char sentence[100][20];                               //sentence broken into 100 words each with 20 characters max
@@ -254,16 +254,30 @@ void task5(void) {
                 sentence[0][b]++;                                                                   //rotates the letter
             }
         }
-        printf("%s\n", sentence[0]);                                                                    //prints the string (TEMP)
+        //printf("%s\n", sentence[0]);                                                                    //prints the string (TEMP)
         for(c = 0; c < 10000; c++)   {                                                          //for every word of the imported dictionary
             if(strcasecmp(sentence[0], words[c]) == 0)  {                                           //check if the first word of the sentence matches a word
-                printf("MATCH '%s' with the word '%s'\n", sentence[0], words[c]);
-                
-                
-                
-                
-                
-                break; //PUT DECRYPTION OF ENTIRE SENTENCEE HERE
+                //printf("MATCH '%s' with the word '%s'\n", sentence[0], words[c]);
+                for(d = 0; d < strlen(sentence[1]); d++)    {
+                    if((int)sentence[1][d] >= 65 && (int)sentence[1][d] <= 90)  {
+                        if((int)sentence[1][d] + a + 1 > 90)
+                            sentence[1][d] -= 26;
+                        sentence[1][d] += a + 1;
+                    }
+                }
+                for(e = 0; e < 10000; e++)  {
+                    if(strcasecmp(sentence[1], words[e]) == 0)    {
+                        for(f = 0; f < strlen(str); f++)    {
+                            if((int)str[f] >= 65 && (int)str[f] <= 90)  {
+                                if((int)str[f] + a + 1 > 90)
+                                    str[f] -= 26;
+                            str[f] += a + 1;
+                            }
+                        }   
+                    }
+                        printf("\n   Decrypted message: %s\n", str);
+                }
+                break;
             }
         }
     }
