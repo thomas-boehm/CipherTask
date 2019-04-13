@@ -13,7 +13,7 @@ gcc cipher.c -compile cipher.c file
 */
 
 //Function prototypes:
-int countWords(char *base, char target[100][20]);
+int SplitSentence(char *base, char target[100][20]);                                            //for splitting a sentence into words
 void menu(void);                                                                                //menu selection
 //Tasks:
 void task1(void);
@@ -243,7 +243,7 @@ void task5(void) {
     dictionary = fopen("dictionary.txt", "r");
 	for(a = 0; a < strlen(str); a++)                                   //changes the input text to all capitals
         str[a] = toupper(str[a]);
-    n = countWords(str, sentence);                                      //reads the input sentence into seperate words
+    n = SplitSentence(str, sentence);                                      //reads the input sentence into seperate words
     for(a = 0; a < 10000; a++)
         fscanf(dictionary, "%s", words[a]);                            //scans dictionary file and stores words inside local array                                                   
     for(a = 1; a < 26; a++)    {                                        //for every possible rotation                                      
@@ -310,18 +310,18 @@ void task6(void) {
     return;
 }
 /*---------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-//Function for reading words:
-int countWords(char *base, char target[100][20])    {
+//Function for breaking a sentence up into individual words:
+int SplitSentence(char *original, char sentence[100][20])    {
 	int n = 0, i, j = 0;	
 	for(i = 0; i < 50; i++)  {
-		if(base[i] != ' ')    {
-			target[n][j++] = base[i];
+		if((int)original[i] != 32)    {
+			sentence[n][j++] = original[i];
 		} else    {
-			target[n][j++] = '\0';       
+			sentence[n][j++] = '\0';       
 			n++;
 			j = 0;
 		}
-		if(base[i] == '\0')   {
+		if(original[i] == '\0')   {
 		    break;
 	    }
 	}
