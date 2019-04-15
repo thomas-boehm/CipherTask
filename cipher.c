@@ -5,13 +5,6 @@
 #include <stdlib.h>
 #include <ctype.h>
 /*---------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-/* Terminal commands:
-ls - dispaly all files in current directory
-cd - current directory eg cd CipherTask changes to the "CipherTask" folder
-gcc cipher.c -compile cipher.c file
-./a.out - run program
-*/
-
 //Function prototypes:
 int SplitSentence(char *base, char target[100][20]);                                            //for splitting a sentence into words
 void menu(void);                                                                                //menu selection
@@ -67,7 +60,7 @@ void menu(void) {
 void task1(void) {                                                                                     
     int i, key;                                                                                 //"i" is a counter (index), "key" is the amount of rotation
     char str[100];                                                                              //"str[100]" is the string of text to be encrypted of maximum length, 100
-    printf("The encryption of text via a rotation cipher, given the text and the key:\n\n");    //a heading to remind the reader what this task does
+    printf("Task 1: Encryption of text via a rotation cipher, given the text and the key:\n\n");    //a heading to remind the reader what this task does
     printf("Enter the text you wish to encrypt.\n   Text: ");                                   //a prompt to enter the text to be encrypted
     scanf(" %[^\n]%*c", str);
     printf("Now enter a key between 0 and 26 to determine the amount of rotation.\n   Key: ");
@@ -107,10 +100,10 @@ void task1(void) {
 void task2(void) {                                                                                  
     int i, key;                                                                                 //"i" is a counter (index), "key" is the amount of rotation
     char str[100];                                                                              //"str[100]" is the string of text to be encrypted of maximum length, 100
-    printf("The decryption of text encrypted via a rotation cipher, given the text and the key:\n\n");    //a heading to remind the reader what this task does
+    printf("Task 2: Decryption of text encrypted via a rotation cipher, given the text and the key:\n\n");    //a heading to remind the reader what this task does
     printf("Enter the text you wish to decrypt.\n   Text: ");                                   //a prompt to enter the text to be decrypted
     scanf(" %[^\n]%*c", str);
-    printf("Now enter a key between 0 and 26 to determine the amount of rotation\n   Key: ");
+    printf("\nNow enter a key between 0 and 26 to determine the amount of rotation\n   Key: ");
     scanf("%d", &key);                                                                          //assigns the input text to the array "str[]"
     if(key >= -25 && key <= 25)    {
         for(i = 0; i < strlen(str); i++)   {                                                    //converts each letter of the input string to the encrypted letter
@@ -149,10 +142,10 @@ void task3(void) {
     char str[100];                                                                              //input text to be encrypted
     char key[26];                                                                               //input key for encryption
     char alph[27] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'}; //regular alphabet
-    printf("The encryption of text via a subtitution cipher, given the text and the key.\n\n"); //a reminder of what this task does
+    printf("Task 3: Encryption of text via a subtitution cipher, given the text and the key.\n\n"); //a reminder of what this task does
     printf("Enter the text you wish to encrypt.\n   Text: ");                                   //a prompt to enter text for encryption
     scanf(" %[^\n]%*c", str);                                                                   //reads input text and assigns it to "str[]"
-    printf("Now enter a key as a rearranged alphabet (e.g. QWERTYUIOPLKJHGFDSAZXCVBNM).\n   Key: ");    //a prompt to enter a key as a rearranged alphabet
+    printf("\nNow enter a key as a rearranged alphabet (e.g. QWERTYUIOPLKJHGFDSAZXCVBNM).\n   Key: ");    //a prompt to enter a key as a rearranged alphabet
     scanf("%s", key);                                                                           //reads input text and assigns it to "key[]"
     for(i = 0; i < strlen(str); i++)    {    
         if(str[i] >= 97 && str[i] <= 122)   {
@@ -192,10 +185,10 @@ void task4(void)    {
     char str[100];                                                                              //input text to be decrypted
     char key[26];                                                                               //input key for decryption
     char alph[27] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'}; //regular alphabet
-    printf("The decryption of text encrypted via a subtitution cipher, given the text and the key.\n\n"); //a reminder of what this task does
+    printf("Task 4: Decryption of text encrypted via a subtitution cipher, given the text and the key.\n\n"); //a reminder of what this task does
     printf("Enter the text you wish to decrypt.\n   Text: ");                                   //a prompt to enter text for decryption
     scanf(" %[^\n]%*c", str);                                                                   //reads input text and assigns it to "str[]"
-    printf("Now enter a key as a rearranged alphabet (e.g. QWERTYUIOPLKJHGFDSAZXCVBNM).\n   Key: ");    //a prompt to enter a key as a rearranged alphabet
+    printf("\nNow enter a key as a rearranged alphabet (e.g. QWERTYUIOPLKJHGFDSAZXCVBNM).\n   Key: ");    //a prompt to enter a key as a rearranged alphabet
     scanf("%s", key);                                                                           //reads input text and assigns it to "key[]"
     for(i = 0; i < strlen(str); i++)    {    
         if(str[i] >= 97 && str[i] <= 122)   {
@@ -235,8 +228,8 @@ void task5(void) {
     char str[100];                                       //input sentence to be encrypted
     char line[128];                                      //each dictionary word
     char sentence[100][20];                               //sentence broken into 100 words each with 20 characters max
-    char words[10000][20];                               //the dictionary is scanned into a local 2D array
-    printf("The decryption of text encrypted via a subtitution cipher, given the text only (no key):\n\n");
+    char words[9976][20];                               //the dictionary is scanned into a local 2D array
+    printf("Task 5: Decryption of text encrypted via a subtitution cipher, given the text only (no key):\n\n");
     printf("Enter the text to be decrypted.\n   Text: ");
     scanf(" %[^\n]%*c", str);
     FILE* dictionary;
@@ -244,7 +237,7 @@ void task5(void) {
 	for(a = 0; a < strlen(str); a++)                                   //changes the input text to all capitals
         str[a] = toupper(str[a]);
     n = SplitSentence(str, sentence);                                      //reads the input sentence into seperate words
-    for(a = 0; a < 10000; a++)
+    for(a = 0; a < 9976; a++)
         fscanf(dictionary, "%s", words[a]);                            //scans dictionary file and stores words inside local array                                                   
     for(a = 1; a < 26; a++)    {                                        //for every possible rotation                                      
         for(b = 0; b < strlen(sentence[0]); b++) {                                      //for each individual letter of the input string                                                  
@@ -255,7 +248,7 @@ void task5(void) {
             }
         }
         //printf("%d. %s\n", a, sentence[0]);                                                                    //prints the string (TEMP)
-        for(c = 0; c < 10000; c++)   {                                                          //for every word of the imported dictionary
+        for(c = 0; c < 9976; c++)   {                                                          //for every word of the imported dictionary
             if(strcasecmp(sentence[0], words[c]) == 0)  {                                           //check if the first word of the sentence matches a word
                 //printf("MATCH '%s' with the word '%s'\n", sentence[0], words[c]);                 //displays which word matched with what (TEMP)
                 for(d = 0; d < strlen(sentence[1]); d++)    {
@@ -265,8 +258,10 @@ void task5(void) {
                         sentence[1][d] += a;
                     }
                 }
-                for(e = 0; e < 10000; e++)  {                                               //checks second word
-                    if(strcasecmp(sentence[1], words[e]) == 0)    {  
+                //printf("%s\n", sentence[1]);
+                for(e = 0; e < 9976; e++)  {                                               //checks second word
+                    if(strcasecmp(sentence[1], words[e]) == 0)    {
+                        //printf("SECOND MATCH with %s", words[e]);
                         for(f = 0; f < strlen(str); f++)    {                                   //decrypts entire sentence
                             if((int)str[f] >= 65 && (int)str[f] <= 90)  {
                                 if((int)str[f] + a > 90)
@@ -275,6 +270,7 @@ void task5(void) {
                             }
                         }
                         printf("\n   Decrypted message: %s\n", str);
+                        break;
                         break;
                     }
                 } 
@@ -296,17 +292,43 @@ void task5(void) {
 /*---------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 // 6. Substitution decryption (give only text):
 void task6(void) {
-    printf("6");
-    static int a = 0;                                                                           //option to return to main menu
+    int a, b, c, d, e, f;
+    char sentence[100][20];
+    char str[100];
+    char words[9976][20];
+    
+    printf("Task 6: Decryption of a message encrypted with a substitution cipher, given the text only (no key).\n\n");
+    printf("Enter the text to be decrypted.\n   Text: ");
+    scanf(" %[^\n]%*c", str);
+    FILE* dictionary;
+    dictionary = fopen("dictionary.txt", "r");
+	for(a = 0; a < strlen(str); a++)                                   //changes the input text to all capitals
+        str[a] = toupper(str[a]);
+    n = SplitSentence(str, sentence);                                      //reads the input sentence into seperate words
+    for(a = 0; a < 9976; a++)
+        fscanf(dictionary, "%s", words[a]);                            //scans dictionary file and stores words inside local array
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    static int z = 0;                                                                           //option to return to main menu
     do {
         printf("Enter 1 to return to the main menu or enter anything else to exit the program:\n   Selction: ");
-        scanf("%d", &a);
-        if(a == 1)  {
+        scanf("%d", &z);
+        if(z == 1)  {
             menu();
         } else{
             exit(0);
         }
-    } while(a != 1);  
+    } while(z != 1);  
     return;
 }
 /*---------------------------------------------------------------------------------------------------------------------------------------------------------------*/
