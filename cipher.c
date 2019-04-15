@@ -292,13 +292,15 @@ void task5(void) {
 /*---------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 // 6. Substitution decryption (give only text):
 void task6(void) {
-    int a, b, c, d, e, f;
-    char sentence[100][20];
-    char str[100];
-    char words[9976][20];
-    
+    int a, b, c, n;
+    char sentence[100][20];         //input sentence brken up into words
+    char str[100];                  //input text
+    int count[26];          //keeps count of each letter
+    char words[9976][20];           //dictionary
+    char alph[26] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};     //alphabet
     printf("Task 6: Decryption of a message encrypted with a substitution cipher, given the text only (no key).\n\n");
     printf("Enter the text to be decrypted.\n   Text: ");
+    //EXAMPLE SENTENCE: THE OTHER DAY I WENT FOR A WALK TO THE SHOPS AND BOUGHT SOME MILK BREAD AND BUTTER WHICH I DESPERATELY NEEDED AS I RECENTLY RAN OUT OF THOSE THINGS
     scanf(" %[^\n]%*c", str);
     FILE* dictionary;
     dictionary = fopen("dictionary.txt", "r");
@@ -307,9 +309,24 @@ void task6(void) {
     n = SplitSentence(str, sentence);                                      //reads the input sentence into seperate words
     for(a = 0; a < 9976; a++)
         fscanf(dictionary, "%s", words[a]);                            //scans dictionary file and stores words inside local array
-    
-    
-    
+    for(a = 0; a < 26; a++)
+        count[a] = 0;                                             //itialises the count of each word to 0
+    for(a = 0; a < strlen(str); a++)    {
+        for(b = 0; b < 26; b++) {
+            if(str[a] == alph[b])
+                count[b]++;
+        }
+    }
+    printf("\n");
+    for(a = 0; a < 26; a++)
+        printf("%d ", count[a]);
+    b = 0;
+    for(a = 0; a < 26; a++)    {
+        if(b < count[a])    
+            b = count[a];
+    }
+    printf("\n%d", b);
+    printf("\nThe decrypted message reads: %s\n\n", str);
     
     
     
