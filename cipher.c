@@ -292,26 +292,21 @@ void task5(void) {
 /*---------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 // 6. Substitution decryption (give only text):
 void task6(void) {
-    int a, b, c, n;
-    char sentence[100][20];         //input sentence brken up into words
+    int a, b, c;
     char str[100];                  //input text
     int count[26];          //keeps count of each letter
-    char words[9976][20];           //dictionary
     char alph[26] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};     //alphabet
+    char key[26] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};      //encrypted alphabet
     printf("Task 6: Decryption of a message encrypted with a substitution cipher, given the text only (no key).\n\n");
     printf("Enter the text to be decrypted.\n   Text: ");
     //EXAMPLE SENTENCE: THE OTHER DAY I WENT FOR A WALK TO THE SHOPS AND BOUGHT SOME MILK BREAD AND BUTTER WHICH I DESPERATELY NEEDED AS I RECENTLY RAN OUT OF THOSE THINGS
+    //                  JDS BJDSN WQL C KSGJ XBN Q KQVF JB JDS UDBYU QGW ABMEDJ UBTS TCVF ANSQW QGW AMJJSN KDCZD C WSUYSNQJSVL GSSWSW QU C NSZSGJVL NQG BMJ BX JDBUS JDCGEU
     scanf(" %[^\n]%*c", str);
-    FILE* dictionary;
-    dictionary = fopen("dictionary.txt", "r");
 	for(a = 0; a < strlen(str); a++)                                   //changes the input text to all capitals
         str[a] = toupper(str[a]);
-    n = SplitSentence(str, sentence);                                      //reads the input sentence into seperate words
-    for(a = 0; a < 9976; a++)
-        fscanf(dictionary, "%s", words[a]);                            //scans dictionary file and stores words inside local array
     for(a = 0; a < 26; a++)
         count[a] = 0;                                             //itialises the count of each word to 0
-    for(a = 0; a < strlen(str); a++)    {
+    for(a = 0; a < strlen(str); a++)    {                       //counts the frequency of each letter
         for(b = 0; b < 26; b++) {
             if(str[a] == alph[b])
                 count[b]++;
@@ -319,11 +314,23 @@ void task6(void) {
     }
     printf("\n");
     for(a = 0; a < 26; a++)
-        printf("%d ", count[a]);
+        printf("%d ", count[a]);                    //to see the frequency of all letters (TEMP)
     b = 0;
-    for(a = 0; a < 26; a++)    {
+    for(a = 0; a < 26; a++)    {                //calculates the most frequent occuring letter
         if(b < count[a])    
             b = count[a];
+    }
+    for(a = 0; a < 26; a++)    {
+        if(count[a] == b)                       //sets the most commonly occuring character to "E"
+            key[a] = 'E';
+    }
+    for(a = 0; a < strlen(str); a++)    {                           //DECRYPTION                                                        
+        for(c = 0; c < 26; c++) { 
+            if(str[a] == key[b])   {                                                    //checks if a given letter of the input text, "str[]" matches a letter from the key, "key[]"
+                str[a] = alph[b];                                                       //if so, assigns this letter to the old letter at that point in the alphabet, dictated by the alphabet string, "alph[]"
+                break;
+            }
+        }
     }
     printf("\n%d", b);
     printf("\nThe decrypted message reads: %s\n\n", str);
