@@ -155,26 +155,25 @@ void task2(void) {
 }
 /*---------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 // 3. Substitution encryption (given text & key):
+/*This function has no arguments and no return value(s). This function is designed to encrypt a given text via a substituion cipher using a given key in the form of
+  a rearranged alphabet (e.g. POIUYTREWQASDFGHJKLMNBVCXZ). When called from the menu, the name of the task is displayed at the top of the screen and the user is
+  prompted with a request to enter the text they wish to encrypt, followed by the key. The encrypted text is then displayed back to the user. This encryption only
+  changes letters, and therefore, numbers and punctuation are ignored. Additionally the program will read both lower and upper-case, however, any input text will be
+  converted to upper-case, and subsequently, all output text will be in upper-case, also.*/
 void task3(void) {
-    int i, k;                                                                                   //counters
-    char str[100];                                                                              //input text to be encrypted
-    char key[26];                                                                               //input key for encryption
+    int i, k;                                                                                   //'i' and 'k' are both used as counters
+    char str[100];                                                                              //used to store the input string (maximum length of 100 characters)
+    char key[26];                                                                               //used to store the input key as a rearranged alphabet
     char alph[27] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'}; //regular alphabet
-    printf("Task 3: Encryption of text via a subtitution cipher, given the text and the key.\n\n"); //a reminder of what this task does
+    printf("Task 3: Encryption of text via a subtitution cipher, given the text and the key.\n\n"); //a heading to inform the user which task they currently using
     printf("Enter the text you wish to encrypt.\n   Text: ");                                   //a prompt to enter text for encryption
-    scanf(" %[^\n]%*c", str);                                                                   //reads input text and assigns it to "str[]"
-    printf("\nNow enter a key as a rearranged alphabet (e.g. QWERTYUIOPLKJHGFDSAZXCVBNM).\n   Key: ");    //a prompt to enter a key as a rearranged alphabet
-    scanf("%s", key);                                                                           //reads input text and assigns it to "key[]"
-    for(i = 0; i < strlen(str); i++)    {    
-        if(str[i] >= 97 && str[i] <= 122)   {
-            str[i] -= 32;
-        }
-    }
-    for(i = 0; i < 26; i++) {                                                                   //for each individual letter of "key[]"
-        if(key[i] >= 97 && key[i] <= 122)   {                                                   //checks if the letter is lower-case
-            key[i] -= 32;                                                                       //changes the letter from lower to upper-case
-        }
-    }    
+    scanf(" %[^\n]%*c", str);                                                                   //reads the input text (including white space) and writes it to the array, 'str'
+    printf("\nNow enter a key as a rearranged alphabet (e.g. QWERTYUIOPLKJHGFDSAZXCVBNM).\n   Key: ");  //a prompt to enter a key as a rearranged alphabet
+    scanf("%s", key);                                                                           //reads input key and writes it to the array, 'key[]'
+    for(i = 0; i < strlen(str); i++)   {                                                         //converts each letter of the input string and the key to a capital letter
+        str[i] = toupper(str[i]);
+        key[i] = toupper(key[i]);
+    }  
     for(k = 0; k < strlen(str); k++)    {                                                       //for each letter of the input text                                                         
         for(i = 0; i < 26; i++) {                                                               //for each letter of the alphabet
             if(str[k] == alph[i])   {                                                           //checks if a given letter of the input text matches a letter from the alphabet
@@ -183,7 +182,7 @@ void task3(void) {
             }
         }
     }
-    printf("\nThe encrypted text reads: %s\n\n", str);                                          //prints the encrypted message to the console
+    printf("\nThe encrypted text reads: %s\n\n", str);                                          //prints the encrypted message
 //Option to return to the menu:
     static int a = 0;                                                                           //a static variable used to store the user's 
     printf("Enter 1 to return to the main menu or enter anything else to exit the program.\n   Selction: ");    //a prompt to the user to make a choice to return to the menu or to quit the program
@@ -207,11 +206,8 @@ void task4(void)    {
     scanf(" %[^\n]%*c", str);                                                                   //reads input text and assigns it to "str[]"
     printf("\nNow enter a key as a rearranged alphabet (e.g. QWERTYUIOPLKJHGFDSAZXCVBNM).\n   Key: ");    //a prompt to enter a key as a rearranged alphabet
     scanf("%s", key);                                                                           //reads input text and assigns it to "key[]"
-    for(i = 0; i < strlen(str); i++)    {    
-        if(str[i] >= 97 && str[i] <= 122)   {
-            str[i] -= 32;
-        }
-    }    
+    for(i = 0; a < strlen(str); i++)                                                            //converts each letter of the input string to a capital letter
+        str[i] = toupper(str[i]);
     for(i = 0; i < 26; i++) {
         if(key[i] >= 97 && key[i] <= 122)   {
             key[i] -= 32;
