@@ -307,52 +307,56 @@ void task5(void) {
     return;
 }
 /*---------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-// 6. Substitution decryption (give only text):
+// 6. Substitution decryption (give only text) [INCOMPLETE]:
+/*This function has no arguments and no return value(s). This function is designed to decrypt a given text via a substituion cipher without a key. When called from
+  the menu, the name of the task is displayed at the top of the screen and the user is prompted with a request to enter the text they wish to decrypt. The decrypted
+  text is then displayed back to the user. This decryption only changes letters, and therefore, numbers and punctuation are ignored. Additionally the program will
+  read both lower and upper-case, however, any input text will be converted to upper-case, and subsequently, all output text will be in upper-case, also.*/
 void task6(void) {
-    int a, b, c;
-    char str[100];                  //input text
-    int count[26];          //keeps count of each letter
-    char alph[26] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};     //alphabet
+    int a, b, c;                                                                                //these variables are used as counters
+    char str[100];                                                                              //used to store the input text (maximum length of 100 characters)
+    int count[26];                                                                              //an array of variables to count the number of times each letter of the alphabet is used
+    char alph[26] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};     //regular alphabet
     char key[26] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};      //encrypted alphabet
-    printf("Task 6: Decryption of a message encrypted with a substitution cipher, given the text only (no key).\n\n");
-    printf("Enter the text to be decrypted.\n   Text: ");
+    printf("Task 6: Decryption of a message encrypted with a substitution cipher, given the text only (no key).\n\n");  //a heading to inform the reader which task they are currently using
+    printf("Enter the text to be decrypted.\n   Text: ");                                       //a prompt to the reader to enter the text to be decrypted
     //EXAMPLE SENTENCE: THE OTHER DAY I WENT FOR A WALK TO THE SHOPS AND BOUGHT SOME MILK BREAD AND BUTTER WHICH I DESPERATELY NEEDED AS I RECENTLY RAN OUT OF THOSE THINGS
-    //                  JDS BJDSN WQL C KSGJ XBN Q KQVF JB JDS UDBYU QGW ABMEDJ UBTS TCVF ANSQW QGW AMJJSN KDCZD C WSUYSNQJSVL GSSWSW QU C NSZSGJVL NQG BMJ BX JDBUS JDCGEU
-    scanf(" %[^\n]%*c", str);
-	for(a = 0; a < strlen(str); a++)                                   //changes the input text to all capitals
+    // ENCRYPTED READS: JDS BJDSN WQL C KSGJ XBN Q KQVF JB JDS UDBYU QGW ABMEDJ UBTS TCVF ANSQW QGW AMJJSN KDCZD C WSUYSNQJSVL GSSWSW QU C NSZSGJVL NQG BMJ BX JDBUS JDCGEU
+    scanf(" %[^\n]%*c", str);                                                                   //reads the input text and writes it to the array, 'str[]'
+	for(a = 0; a < strlen(str); a++)                                                            //converts each letter of the input text to upper-case
         str[a] = toupper(str[a]);
     for(a = 0; a < 26; a++)
-        count[a] = 0;                                             //itialises the count of each word to 0
-    for(a = 0; a < strlen(str); a++)    {                       //counts the frequency of each letter
-        for(b = 0; b < 26; b++) {
-            if(str[a] == alph[b])
-                count[b]++;
+        count[a] = 0;                                                                           //itialises the count of each letter to 0
+    for(a = 0; a < strlen(str); a++)    {                                                       //for each letter of the string
+        for(b = 0; b < 26; b++) {                                                               //for each letter of the alphabet
+            if(str[a] == alph[b])                                                               //checks if letter of the string matches the letter of the alphabet
+                count[b]++;                                                                     //counts the use of each letter and stores the information inside the array, count[]
         }
     }
     printf("\n");
     for(a = 0; a < 26; a++)
-        printf("%d ", count[a]);                    //to see the frequency of all letters (TEMP)
+        printf("%d ", count[a]);                                                                //displays the frequency of all letters (TEMPORARY)
     b = 0;
-    for(a = 0; a < 26; a++)    {                //calculates the most frequent occuring letter
+    for(a = 0; a < 26; a++)    {                                                                //calculates the most frequent occuring letter
         if(b < count[a])    
             b = count[a];
     }
     for(a = 0; a < 26; a++)    {
-        if(count[a] == b)                       //sets the most commonly occuring character to "E"
+        if(count[a] == b)                                                                       //sets the most commonly occuring character to "E"
             key[a] = 'E';
     }
-    for(a = 0; a < strlen(str); a++)    {                           //DECRYPTION                                                        
+    for(a = 0; a < strlen(str); a++)    {                                                       //DECRYPTION (INCOMPLETE):                                                        
         for(c = 0; c < 26; c++) { 
-            if(str[a] == key[b])   {                                                    //checks if a given letter of the input text, "str[]" matches a letter from the key, "key[]"
-                str[a] = alph[b];                                                       //if so, assigns this letter to the old letter at that point in the alphabet, dictated by the alphabet string, "alph[]"
+            if(str[a] == key[b])   {                                                            //checks if a given letter of the input text, 'str[]' matches a letter from the key, 'key[]'
+                str[a] = alph[b];                                                               //if so, assigns this letter to the old letter at that point in the alphabet, dictated by the alphabet string, 'alph[]'
                 break;
             }
         }
     }
-    printf("\n%d", b);
-    printf("\nThe decrypted message reads: %s\n\n", str);
+    //printf("\n%d", b);                                                                        //prints the most commonly occuring letter in the string
+    printf("\nThe decrypted message reads: %s\n\n", str);                                       //prints the decrypted message
 //Option to return to the menu:
-    static int z = 0;                                                                           //a static variable used to store the user's 
+    static int z = 0;                                                                           //a static variable used to store the user's selection
     printf("Enter 1 to return to the main menu or enter anything else to exit the program.\n   Selction: ");    //a prompt to the user to make a choice to return to the menu or to quit the program
     scanf("%d", &z);                                                                            //writes the input selection to the static variable, 'z'
     if(z == 1)  {                                                                               //checks if the input was '1'
