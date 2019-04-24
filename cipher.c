@@ -368,17 +368,20 @@ void task6(void) {
 }
 /*---------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 //Function for breaking a sentence up into individual words:
+/*This function takes two arguments; a string to be split into words (original[]), and a two-dimensional array to store each word into (sentence[][]). The function
+  returns 'n', however, this variable is not of importance. When the function is called, a string can be split into individual words, which is the true purpose of
+  the function.*/
 int SplitSentence(char *original, char sentence[100][20])    {
-	int n = 0, i, j = 0;	
-	for(i = 0; i < 50; i++)  {
-		if((int)original[i] != 32)    {
-			sentence[n][j++] = original[i];
+	int n = 0, i, j = 0;	                                                                    //variables used for counters
+	for(i = 0; i < 50; i++)  {                                                                  //for every letter a string
+		if((int)original[i] != 32)    {                                                         //checks if the letter is not white space
+			sentence[n][j++] = original[i];                                                     //stores that word into the two-dimensional array
 		} else    {
-			sentence[n][j++] = '\0';       
+			sentence[n][j++] = '\0';                                                            //if the character is white space, move to the next word
 			n++;
 			j = 0;
 		}
-		if(original[i] == '\0')   {
+		if(original[i] == '\0')   {                                                             //when the original text ends, end the function
 		    break;
 	    }
 	}
