@@ -99,7 +99,7 @@ void task1(void) {
         task1();
         }
 //Option to return to the menu:
-    static int a = 0;                                                                           //a static variable used to store the user's 
+    static int a = 0;                                                                           //a static variable used to store the user's selection
     printf("Enter 1 to return to the main menu or enter anything else to exit the program.\n   Selction: ");    //a prompt to the user to make a choice to return to the menu or to quit the program
     scanf("%d", &a);                                                                            //writes the input selection to the static variable, 'a'
     if(a == 1)  {                                                                               //checks if the input was '1'
@@ -143,7 +143,7 @@ void task2(void) {
         task2();
         }
 //Option to return to the menu:
-    static int a = 0;                                                                           //a static variable used to store the user's 
+    static int a = 0;                                                                           //a static variable used to store the user's selection
     printf("Enter 1 to return to the main menu or enter anything else to exit the program.\n   Selction: ");    //a prompt to the user to make a choice to return to the menu or to quit the program
     scanf("%d", &a);                                                                            //writes the input selection to the static variable, 'a'
     if(a == 1)  {                                                                               //checks if the input was '1'
@@ -184,7 +184,7 @@ void task3(void) {
     }
     printf("\nThe encrypted text reads: %s\n\n", str);                                          //prints the encrypted message
 //Option to return to the menu:
-    static int a = 0;                                                                           //a static variable used to store the user's 
+    static int a = 0;                                                                           //a static variable used to store the user's selection
     printf("Enter 1 to return to the main menu or enter anything else to exit the program.\n   Selction: ");    //a prompt to the user to make a choice to return to the menu or to quit the program
     scanf("%d", &a);                                                                            //writes the input selection to the static variable, 'a'
     if(a == 1)  {                                                                               //checks if the input was '1'
@@ -225,7 +225,7 @@ void task4(void)    {
     }
     printf("\nThe decrypted text reads: %s\n\n", str);                                          //prints the decrypted message
 //Option to return to the menu:
-    static int a = 0;                                                                           //a static variable used to store the user's 
+    static int a = 0;                                                                           //a static variable used to store the user's selection
     printf("Enter 1 to return to the main menu or enter anything else to exit the program.\n   Selction: ");    //a prompt to the user to make a choice to return to the menu or to quit the program
     scanf("%d", &a);                                                                            //writes the input selection to the static variable, 'a'
     if(a == 1)  {                                                                               //checks if the input was '1'
@@ -237,62 +237,66 @@ void task4(void)    {
 }
 /*---------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 // 5. Roation decryption (given only text):
+/*This function has no arguments and no return value(s). This function is designed to decrypt a given text via a rotation cipher by an unknown amount of rotation.
+  When called from the menu, the name of the task is displayed at the top of the screen and the user is prompted with a request to enter the text they wish to
+  decrypt. The decrypted text is then displayed back to the user. This decryption only changes letters, and therefore, numbers and punctuation are ignored.
+  Additionally the program will read both lower and upper-case, however, any input text will be converted to upper-case, and subsequently, all output text will be
+  in upper-case, also.*/
 void task5(void) {
-    int a, b, c, d, e, f, m = 0, n;
-    char str[100];                                       //input sentence to be encrypted
-    char line[128];                                      //each dictionary word
-    char sentence[100][20];                               //sentence broken into 100 words each with 20 characters max
-    char words[9976][20];                               //the dictionary is scanned into a local 2D array
-    printf("Task 5: Decryption of text encrypted via a subtitution cipher, given the text only (no key):\n\n");
-    printf("Enter the text to be decrypted.\n   Text: ");
-    scanf(" %[^\n]%*c", str);
-    FILE* dictionary;
-    dictionary = fopen("dictionary.txt", "r");
-	for(a = 0; a < strlen(str); a++)                                   //changes the input text to all capitals
+    int a, b, c, d, e, f, m = 0, n;                                                             //these variables are used for counters
+    char str[100];                                                                              //used to store the input text (maximum length of 100 characters)
+    char sentence[100][20];                                                                     //used to store each individual word (of maximum 20 letters long) of the input sentence (of maximum 100 words long)
+    char words[9976][20];                                                                       //used to store the most common words in the english dictionary
+    printf("Task 5: Decryption of text encrypted via a subtitution cipher, given the text only (no key):\n\n"); //a heading to inform the user which task they are currently using
+    printf("Enter the text to be decrypted.\n   Text: ");                                       //a prompt to the user to enter the text to be decrypted
+    scanf(" %[^\n]%*c", str);                                                                   //reads the input text (including white space) and writes it to the array, 'str[]'
+    FILE* dictionary;                                                                           //declaring the file variable to be used to refer to the file with the list of the 10 000 most common words
+    dictionary = fopen("dictionary.txt", "r");                                                  //open the dictionary file for reading
+	for(a = 0; a < strlen(str); a++)                                                            //converts all letters from the input text capitals
         str[a] = toupper(str[a]);
-    n = SplitSentence(str, sentence);                                      //reads the input sentence into seperate words
-    for(a = 0; a < 9976; a++)
-        fscanf(dictionary, "%s", words[a]);                            //scans dictionary file and stores words inside local array                                                   
-    for(a = 1; a < 26; a++)    {                                        //for every possible rotation                                      
-        for(b = 0; b < strlen(sentence[0]); b++) {                                      //for each individual letter of the input string                                                  
-            if((int)sentence[0][b] >= 65 && (int)sentence[0][b] <= 90)   {                                         //checks for upper case letters only
-                if((int)sentence[0][b] + 1 > 90)                                                    //checks if a rotation from 'z' to 'a' is necessary  
-                    sentence[0][b] -= 26;                                                       
-                sentence[0][b]++;                                                                   //rotates the letter
+    n = SplitSentence(str, sentence);                                                           //breaks the input text into individual words, stored in 'sentence[][]'
+    for(a = 0; a < 9976; a++)                                                                   //stores each word in the dictionary file into a local array, 'words[a]'
+        fscanf(dictionary, "%s", words[a]);                                                                            
+    for(a = 1; a < 26; a++)    {                                                                //for every possible rotation                                      
+        for(b = 0; b < strlen(sentence[0]); b++) {                                              //for each individual letter of the input string                                                  
+            if((int)sentence[0][b] >= 65 && (int)sentence[0][b] <= 90)   {                      //checks for upper case letters only (excludes letters and punctuation)
+                if((int)sentence[0][b] + 1 > 90)                                                //checks if a rotation from 'z' to 'a' is necessary (if the new ASCII value of a character is greater than 'Z')  
+                    sentence[0][b] -= 26;                                                       //converts 'Z + 1' into 'A' if necessary
+                sentence[0][b]++;                                                               //rotates the letter
             }
         }
-        //printf("%d. %s\n", a, sentence[0]);                                                                    //prints the string (TEMP)
-        for(c = 0; c < 9976; c++)   {                                                          //for every word of the imported dictionary
-            if(strcasecmp(sentence[0], words[c]) == 0)  {                                           //check if the first word of the sentence matches a word
-                //printf("MATCH '%s' with the word '%s'\n", sentence[0], words[c]);                 //displays which word matched with what (TEMP)
-                for(d = 0; d < strlen(sentence[1]); d++)    {
-                    if((int)sentence[1][d] >= 65 && (int)sentence[1][d] <= 90)  {
-                        if((int)sentence[1][d] + a > 90)
-                            sentence[1][d] -= 26;
-                        sentence[1][d] += a;
+        //printf("%d. %s\n", a, sentence[0]);                                                   //prints every rotation of the string (TEMPORARY)
+        for(c = 0; c < 9976; c++)   {                                                           //for every word of the imported dictionary
+            if(strcasecmp(sentence[0], words[c]) == 0)  {                                       //check if the first word of the sentence matches a dictionary word
+                //printf("MATCH '%s' with the word '%s'\n", sentence[0], words[c]);             //displays the word that matched (TEMPORARY)
+                for(d = 0; d < strlen(sentence[1]); d++)    {                                   //if the first word matched, check if the second word matches also
+                    if((int)sentence[1][d] >= 65 && (int)sentence[1][d] <= 90)  {               //checks for upper case letters only (excludes letters and punctuation)
+                        if((int)sentence[1][d] + a > 90)                                        //checks if a rotation from 'z' to 'a' is necessary (if the new ASCII value of a character is greater than 'Z')
+                            sentence[1][d] -= 26;                                               //converts 'Z + 1' into 'A' if necessary
+                        sentence[1][d] += a;                                                    //applies the same rotation to the second word as was applied to the first word
                     }
                 }
-                //printf("%s\n", sentence[1]);
-                for(e = 0; e < 9976; e++)  {                                               //checks second word
-                    if(strcasecmp(sentence[1], words[e]) == 0)    {
-                        //printf("SECOND MATCH with %s", words[e]);
-                        for(f = 0; f < strlen(str); f++)    {                                   //decrypts entire sentence
-                            if((int)str[f] >= 65 && (int)str[f] <= 90)  {
-                                if((int)str[f] + a > 90)
-                                    str[f] -= 26;
-                            str[f] += a;
+                //printf("%s\n", sentence[1]);                                                  //prints every second word (TEMPORARY)
+                for(e = 0; e < 9976; e++)  {                                                    //for every word of the dictionary
+                    if(strcasecmp(sentence[1], words[e]) == 0)    {                             //checks if the second word of the sentence rotated with the same amount as the first matches a dictionary word
+                        //printf("SECOND MATCH with %s", words[e]);                             //displays the word that matched (TEMPORARY)
+                        for(f = 0; f < strlen(str); f++)    {                                   //decrypts the entire sentence
+                            if((int)str[f] >= 65 && (int)str[f] <= 90)  {                       //checks for upper-case letters (excludes numbers and punctuation)
+                                if((int)str[f] + a > 90)                                        //checks if a rotation from 'z' to 'a' is necessary (if the new ASCII value of a character is greater than 'Z')
+                                    str[f] -= 26;                                               //converts 'Z + 1' into 'A' if necessary
+                            str[f] += a;                                                        //applies the rotation to the string, 'str[]'
                             }
                         }
-                        printf("\n   Decrypted message: %s\n", str);
-                        break;
-                        break;
+                        printf("\n   Decrypted message: %s\n", str);                            //prints the decrypted message
+                        break;                                                                  //stops checking for that rotation
+                        break;                                                                  //stops checking for that word
                     }
                 } 
             }
         }
     }
 //Option to return to the menu:
-    static int z = 0;                                                                           //a static variable used to store the user's 
+    static int z = 0;                                                                           //a static variable used to store the user's selection
     printf("Enter 1 to return to the main menu or enter anything else to exit the program.\n   Selction: ");    //a prompt to the user to make a choice to return to the menu or to quit the program
     scanf("%d", &z);                                                                            //writes the input selection to the static variable, 'z'
     if(z == 1)  {                                                                               //checks if the input was '1'
