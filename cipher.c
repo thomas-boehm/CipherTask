@@ -1,8 +1,7 @@
-/*This code is designed to complete six unique tasks involving encryption and decrpytion of text using rotation and substitution
-ciphers. The code beings by offering the user a menu from which they can select the task they wish to complete. Once a task has
-been completed, the program will offer the user to return to the main menu, where they can then choose to execute the same or a
-different task. Additionally, the user can choose to quit the program from the menu. Each task is a seperate function, which the
-menu will call when the user requests. This program takes the user's input from the standard input and outputs to the standard
+/*This code is designed to complete six unique tasks involving encryption and decrpytion of text using rotation and substitution ciphers. The code beings by
+offering the user a menu from which they can select the task they wish to complete. Once a task has been completed, the program will offer the user to return to
+the main menu, where they can then choose to execute the same or a different task. Additionally, the user can choose to quit the program from the menu. Each task
+is a seperate function, which the menu will call when the user requests. This program takes the user's input from the standard input and outputs to the standard
 output.*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 //Header files:
@@ -31,11 +30,10 @@ int main()  {
 /*---------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 //Function definitions: 
 //Menu:
-/*The menu function consists of a list of possible selections being displayed to the user, followed by a request to choose a
-  selection. This function has no arguments and no return value. This function is specifically designed as gateway to access the
-  tasks that this program is designed to execute. The selection process is achieved via a 'switch' statement, where the user's
-  input (a number corresponding to the task number they wish to access) is read, and the corresponding task (function) is called.
-  If anything other than 1 to 7 is input, the function will restart and inform the user of an invalid entry.*/
+/*The menu function consists of a list of possible selections being displayed to the user, followed by a request to choose a selection. This function has no
+  arguments and no return value. This function is specifically designed as gateway to access the tasks that this program is designed to execute. The selection
+  process is achieved via a 'switch' statement, where the user's input (a number corresponding to the task number they wish to access) is read, and the
+  corresponding task (function) is called. If anything other than 1 to 7 is input, the function will restart and inform the user of an invalid entry.*/
 void menu(void) {
     static int menuInput = 0;                                                                   //a variable to store  the user's selection
     do  {                                                                                       //a 'do while' loop is used to execute the menu once, and then repeat it if the input selection is invalid
@@ -69,21 +67,26 @@ void menu(void) {
 }
 /*---------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 // 1. Rotation encryption (given text & key):
+/*This function has no arguments and no return value(s). This function is designed to encrypt a given text via a rotation cipher by a given amount of rotation.
+  When called from the menu, the name of the task is displayed at the top of the screen and the user is prompted with a request to enter the text they wish to
+  encrypt, followed by the amount of rotation required to do so. The encrypted text is then displayed back to the user. This encryption only changes letters, and
+  therefore, numbers and punctuation are ignored. Additionally the program will read both lower and upper-case, however, any input text will be converted to upper-
+  case, and subsequently, all output text will be in upper-case, also.*/
 void task1(void) {                                                                                     
-    int i, key;                                                                                 //"i" is a counter (index), "key" is the amount of rotation
-    char str[100];                                                                              //"str[100]" is the string of text to be encrypted of maximum length, 100
-    printf("Task 1: Encryption of text via a rotation cipher, given the text and the key:\n\n");    //a heading to remind the reader what this task does
+    int i, key;                                                                                 //'i' is a counter (index), 'key' is the amount of rotation
+    char str[100];                                                                              //used to store the input string, which can have a maximum character length of 100
+    printf("Task 1: Encryption of text via a rotation cipher, given the text and the key:\n\n");//a heading to inform the user which task they are currently using
     printf("Enter the text you wish to encrypt.\n   Text: ");                                   //a prompt to enter the text to be encrypted
-    scanf(" %[^\n]%*c", str);
-    printf("Now enter a key between 0 and 26 to determine the amount of rotation.\n   Key: ");
-    scanf("%d", &key);                                                                          //assigns the input text to the array "str[]"
-    if(key >= 0 && key < 26)    {
+    scanf(" %[^\n]%*c", str);                                                                   //this code reads input text (including white space) and writes it into 'str[]'
+    printf("Now enter a key between 0 and 26 to determine the amount of rotation.\n   Key: ");  //a prompt to enter a key to determine the amount of rotation
+    scanf("%d", &key);                                                                          //assigns the input key to the array 'key[]'
+    if(key >= 0 && key < 26)    {                                                               //checks if the key is valid (between 0 and 26)
         for(i = 0; i < strlen(str); i++)   {                                                    //converts each letter of the input string to the encrypted letter                                                                     //checks for a positive key
             if((int)str[i] >= 97 && (int)str[i] <= 122)    {                                    //checks for lower-case letters
                 if((int)str[i] + key > 122)    {                                                //checks if the letter is bigger than 'z'
                     str[i] -= 26;                                                               //subtracts 26 to turn 'z + 1' into 'a'
                 }
-                str[i] = str[i] + key - 32;                                                     //adds the value of "key" to the ASCII code of the letter
+                str[i] = str[i] + key - 32;                                                     //adds the value of "key" to the ASCII code of the letter and converts lower-case letters to upper-case
             } else if((int)str[i] >= 65 && (int)str[i] <= 90)  {                                //checks for upper-case letters
                 if((int)str[i] + key > 90)    {                                                 //checks if the letter is bigger than 'Z'
                     str[i] -= 26;                                                               //subtracts 26 to turn 'Z + 1' into 'A'
@@ -95,16 +98,15 @@ void task1(void) {
     }   else    {
         task1();
         }
-    static int a = 0;                                                                           //option to return to main menu
-    do {
-        printf("Enter 1 to return to the main menu or enter anything else to exit the program.\n   Selction: ");
-        scanf("%d", &a);
-        if(a == 1)  {
-            menu();
-        } else{
-            exit(0);
-        }
-    } while(a != 1);  
+//Option to return to the menu:
+    static int a = 0;                                                                           //a static variable used to store the user's 
+    printf("Enter 1 to return to the main menu or enter anything else to exit the program.\n   Selction: ");    //a prompt to the user to make a choice to return to the menu or to quit the program
+    scanf("%d", &a);                                                                            //writes the input selection to the static variable, 'a'
+    if(a == 1)  {                                                                               //checks if the input was '1'
+        menu();                                                                                 //calls the menu function
+    } else  {
+        exit(0);                                                                                //quits the program if anything other than '1' is input
+    } 
     return;
 }
 /*---------------------------------------------------------------------------------------------------------------------------------------------------------------*/
