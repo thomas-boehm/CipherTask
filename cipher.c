@@ -1,9 +1,15 @@
+/*This code is designed to complete six unique tasks involving encryption and decrpytion of text using rotation and substitution
+ciphers. The code beings by offering the user a menu from which they can select the task they wish to complete. Once a task has
+been completed, the program will offer the user to return to the main menu, where they can then choose to execute the same or a
+different task. Additionally, the user can choose to quit the program from the menu. Each task is a seperate function, which the
+menu will call when the user requests. This program takes the user's input from the standard input and outputs to the standard
+output.*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 //Header files:
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <ctype.h>
+#include <ctype.h>                                                                              //used for converting lower-case letters to upper-case using 'toupper()'
 /*---------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 //Function prototypes:
 int SplitSentence(char *base, char target[100][20]);                                            //for splitting a sentence into words
@@ -335,14 +341,6 @@ void task6(void) {
     printf("\n%d", b);
     printf("\nThe decrypted message reads: %s\n\n", str);
     
-    
-    
-    
-    
-    
-    
-    
-    
     static int z = 0;                                                                           //option to return to main menu
     do {
         printf("Enter 1 to return to the main menu or enter anything else to exit the program:\n   Selction: ");
@@ -372,4 +370,4 @@ int SplitSentence(char *original, char sentence[100][20])    {
 	    }
 	}
 	return n;
-}	
+}
