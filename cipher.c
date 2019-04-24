@@ -23,27 +23,33 @@ void task5(void);
 void task6(void);
 /*---------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 //MAIN (Calling the menu fuction):
+/*The program begins in main, where the menu function is called immediately.*/
 int main()  {
-    menu();
+    menu();                                                                                     //the menu is called
     return 0;
 }
 /*---------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 //Function definitions: 
-//Menu
+//Menu:
+/*The menu function consists of a list of possible selections being displayed to the user, followed by a request to choose a
+  selection. This function has no arguments and no return value. This function is specifically designed as gateway to access the
+  tasks that this program is designed to execute. The selection process is achieved via a 'switch' statement, where the user's
+  input (a number corresponding to the task number they wish to access) is read, and the corresponding task (function) is called.
+  If anything other than 1 to 7 is input, the function will restart and inform the user of an invalid entry.*/
 void menu(void) {
-    static int menuInput = 0;                                                                   //user's selection
-    do  {
-        printf("Enter the number that corresponds to the program you wish to access: \n\n");
-        printf("   1. Encryption of a message with a rotation cipher, given the text and the key.\n");
+    static int menuInput = 0;                                                                   //a variable to store  the user's selection
+    do  {                                                                                       //a 'do while' loop is used to execute the menu once, and then repeat it if the input selection is invalid
+        printf("Enter the number that corresponds to the program you wish to access: \n\n");    //a prompt to the user to input a selection that corresponds to the task they wish to access
+        printf("   1. Encryption of a message with a rotation cipher, given the text and the key.\n");  //the seven possible selections that the user can choose
         printf("   2. Decryption of a message encrypted with a rotation cipher, given text and the key.\n");
         printf("   3. Encryption of a message with a substitution cipher, given text and the key.\n");
         printf("   4. Decryption of a message encrypted with a substitution cipher, given the text and the key.\n");
         printf("   5. Decryption of a message encrypted with a rotation cipher, given the text only (no key).\n");
         printf("   6. Decryption of a message encrypted with a substitution cipher, given the text only (no key).\n");
         printf("   7. Exit.\n\nSelection: ");
-        scanf("%d", &menuInput);
-        switch(menuInput)   {                                                                   //calls the appropriate function depending on user selection
-            case 1: task1();
+        scanf("%d", &menuInput);                                                                //writes the user's input into the variable, 'menuInput'
+        switch(menuInput)   {                                                                   //reads the 'menuInput' and calls the corresponding function
+            case 1: task1();                                                                    //the seven possible functions to execute:
             break;
             case 2: task2();
             break;
@@ -56,9 +62,9 @@ void menu(void) {
             case 6: task6();
             break;
             case 7: exit(7);
-            default: printf("Invalid entry, please try again. ");
+            default: printf("Invalid entry, please try again. ");                                //if the input is invalid, the function will restart and the user will be prompted to try again
         } 
-    }   while(menuInput!=1 && menuInput!=2 && menuInput!=3 && menuInput!=4 && menuInput!=5 && menuInput!=6 && menuInput!=7);    //checks if input is valid (do while loop was not functioning)
+    }   while(menuInput!=1 && menuInput!=2 && menuInput!=3 && menuInput!=4 && menuInput!=5 && menuInput!=6 && menuInput!=7);    //checks if input is valid
     return;
 }
 /*---------------------------------------------------------------------------------------------------------------------------------------------------------------*/
