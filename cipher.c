@@ -79,23 +79,23 @@ void task1(void) {
     printf("Enter the text you wish to encrypt.\n   Text: ");                                   //a prompt to enter the text to be encrypted
     scanf(" %[^\n]%*c", str);                                                                   //this code reads input text (including white space) and writes it into 'str[]'
     printf("Now enter a key between 0 and 26 to determine the amount of rotation.\n   Key: ");  //a prompt to enter a key to determine the amount of rotation
-    scanf("%d", &key);                                                                          //assigns the input key to the array 'key[]'
+    scanf("%d", &key);                                                                          //assigns the input key to the variable 'key'
     if(key >= 0 && key < 26)    {                                                               //checks if the key is valid (between 0 and 26)
-        for(i = 0; i < strlen(str); i++)   {                                                    //converts each letter of the input string to the encrypted letter                                                                     //checks for a positive key
+        for(i = 0; i < strlen(str); i++)   {                                                    //for every letter of the string
             if((int)str[i] >= 97 && (int)str[i] <= 122)    {                                    //checks for lower-case letters
-                if((int)str[i] + key > 122)    {                                                //checks if the letter is bigger than 'z'
+                if((int)str[i] + key > 122)    {                                                //checks if the letter is greater than the ASCII value for 'z'
                     str[i] -= 26;                                                               //subtracts 26 to turn 'z + 1' into 'a'
                 }
                 str[i] = str[i] + key - 32;                                                     //adds the value of "key" to the ASCII code of the letter and converts lower-case letters to upper-case
             } else if((int)str[i] >= 65 && (int)str[i] <= 90)  {                                //checks for upper-case letters
-                if((int)str[i] + key > 90)    {                                                 //checks if the letter is bigger than 'Z'
+                if((int)str[i] + key > 90)    {                                                 //checks if the letter is greater than the ASCII value for 'Z'
                     str[i] -= 26;                                                               //subtracts 26 to turn 'Z + 1' into 'A'
                 }
                 str[i] += key;                                                                  //adds the value of "key" to the ASCII code of the letter
             }
         }
         printf("\nThe encrypted message reads: %s\n\n", str);                                   //prints the encrypted message
-    }   else    {
+    }   else    {                                                                               //if the key is invalid, the function is called again (restarts)
         task1();
         }
 //Option to return to the menu:
@@ -111,42 +111,46 @@ void task1(void) {
 }
 /*---------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 // 2. Rotation decryption (given text & key):
+/*This function has no arguments and no return value(s). This function is designed to decrypt a given text via a rotation cipher by a given amount of rotation.
+  When called from the menu, the name of the task is displayed at the top of the screen and the user is prompted with a request to enter the text they wish to
+  decrypt, followed by the amount of rotation required to do so. The decrypted text is then displayed back to the user. This decryption only changes letters, and
+  therefore, numbers and punctuation are ignored. Additionally the program will read both lower and upper-case, however, any input text will be converted to upper-
+  case, and subsequently, all output text will be in upper-case, also.*/
 void task2(void) {                                                                                  
     int i, key;                                                                                 //"i" is a counter (index), "key" is the amount of rotation
-    char str[100];                                                                              //"str[100]" is the string of text to be encrypted of maximum length, 100
-    printf("Task 2: Decryption of text encrypted via a rotation cipher, given the text and the key:\n\n");    //a heading to remind the reader what this task does
-    printf("Enter the text you wish to decrypt.\n   Text: ");                                   //a prompt to enter the text to be decrypted
-    scanf(" %[^\n]%*c", str);
-    printf("\nNow enter a key between 0 and 26 to determine the amount of rotation\n   Key: ");
-    scanf("%d", &key);                                                                          //assigns the input text to the array "str[]"
-    if(key >= -25 && key <= 25)    {
-        for(i = 0; i < strlen(str); i++)   {                                                    //converts each letter of the input string to the encrypted letter
-            if((int)str[i] >= 97 && (int)str[i] <=122)    {                                 //checks for lower-case letters
-                if((int)str[i] - key < 97)    {                                             //checks if the letter is bigger than 'z'
-                    str[i] += 26;                                                           //subtracts 26 to turn 'z + 1' into 'a'
+    char str[100];                                                                              ////used to store the input string, which can have a maximum character length of 100
+    printf("Task 2: Decryption of text encrypted via a rotation cipher, given the text and the key:\n\n");    //a heading to inform the reader which task they are currently using
+    printf("Enter the text you wish to decrypt.\n   Text: ");                                   //a prompt to the user to enter the text to be decrypted
+    scanf(" %[^\n]%*c", str);                                                                   //reads input text (including white space) and writes it into the array, 'str[]'
+    printf("\nNow enter a key between 0 and 26 to determine the amount of rotation\n   Key: "); //a prompt to the user to input a key to determine the amount of rotation
+    scanf("%d", &key);                                                                          //assigns the input key to the variable, 'key'
+    if(key >= 0 && key < 26)    {                                                               //checks if the key is valid (between 0 and 26)
+        for(i = 0; i < strlen(str); i++)   {                                                    //for every letter of the string
+            if((int)str[i] >= 97 && (int)str[i] <=122)    {                                     //checks for lower-case letters
+                if((int)str[i] - key < 97)    {                                                 //checks if the letter is less than the ASCII value for 'a'
+                    str[i] += 26;                                                               //subtracts 26 to turn 'a - 1' into 'z'
                 }
-                str[i] = str[i] - key - 32;                                                 //adds the value of "key" to the ASCII code of the letter
-            } else if((int)str[i] >= 65 && (int)str[i] <= 90)  {                            //checks for upper-case letters
-                if((int)str[i] - key < 65)    {                                             //checks if the letter is bigger than 'Z'
-                    str[i] += 26;                                                           //subtracts 26 to turn 'Z + 1' into 'A'
+                str[i] = str[i] - key - 32;                                                     //adds the value of "key" to the ASCII code of the letter and converts the letter to upper-case
+            } else if((int)str[i] >= 65 && (int)str[i] <= 90)  {                                //checks for upper-case letters
+                if((int)str[i] - key < 65)    {                                                 //checks if the letter is less than the ASCII value for 'A'
+                    str[i] += 26;                                                               //subtracts 26 to turn 'A - 1' into 'Z'
                 }
-                str[i] -= key;                                                              //adds the value of "key" to the ASCII code of the letter
+                str[i] -= key;                                                                  //adds the value of "key" to the ASCII code of the letter
             }
         }
         printf("\nThe decrypted message reads: %s\n\n", str);                                   //prints the encrypted message
-    }   else    {
+    }   else    {                                                                               //if the key is invalid, the function is called again (restarts)
         task2();
         }
-    static int a = 0;                                                                           //option to return to main menu
-    do {
-        printf("Enter 1 to return to the main menu or enter anything else to exit the program:\n   Selction: ");
-        scanf("%d", &a);
-        if(a == 1)  {
-            menu();
-        } else{
-            exit(0);
-        }
-    } while(a != 1);  
+//Option to return to the menu:
+    static int a = 0;                                                                           //a static variable used to store the user's 
+    printf("Enter 1 to return to the main menu or enter anything else to exit the program.\n   Selction: ");    //a prompt to the user to make a choice to return to the menu or to quit the program
+    scanf("%d", &a);                                                                            //writes the input selection to the static variable, 'a'
+    if(a == 1)  {                                                                               //checks if the input was '1'
+        menu();                                                                                 //calls the menu function
+    } else  {
+        exit(0);                                                                                //quits the program if anything other than '1' is input
+    } 
     return;
 }
 /*---------------------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -180,16 +184,15 @@ void task3(void) {
         }
     }
     printf("\nThe encrypted text reads: %s\n\n", str);                                          //prints the encrypted message to the console
-    static int a = 0;                                                                           //option to return to main menu
-    do {
-        printf("Enter 1 to return to the main menu or enter anything else to exit the program:\n   Selection: ");
-        scanf("%d", &a);
-        if(a == 1)  {
-            menu();
-        } else{
-            exit(0);
-        }
-    } while(a != 1);  
+//Option to return to the menu:
+    static int a = 0;                                                                           //a static variable used to store the user's 
+    printf("Enter 1 to return to the main menu or enter anything else to exit the program.\n   Selction: ");    //a prompt to the user to make a choice to return to the menu or to quit the program
+    scanf("%d", &a);                                                                            //writes the input selection to the static variable, 'a'
+    if(a == 1)  {                                                                               //checks if the input was '1'
+        menu();                                                                                 //calls the menu function
+    } else  {
+        exit(0);                                                                                //quits the program if anything other than '1' is input
+    } 
     return;
 }
 /*---------------------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -223,16 +226,15 @@ void task4(void)    {
         }
     }
     printf("\nThe decrypted text reads: %s\n\n", str);
-    static int a = 0;                                                                           //option to return to main menu
-    do {
-        printf("Enter 1 to return to the main menu or enter anything else to exit the program:\n   Selection: ");
-        scanf("%d", &a);
-        if(a == 1)  {
-            menu();
-        } else{
-            exit(0);
-        }
-    } while(a != 1);  
+//Option to return to the menu:
+    static int a = 0;                                                                           //a static variable used to store the user's 
+    printf("Enter 1 to return to the main menu or enter anything else to exit the program.\n   Selction: ");    //a prompt to the user to make a choice to return to the menu or to quit the program
+    scanf("%d", &a);                                                                            //writes the input selection to the static variable, 'a'
+    if(a == 1)  {                                                                               //checks if the input was '1'
+        menu();                                                                                 //calls the menu function
+    } else  {
+        exit(0);                                                                                //quits the program if anything other than '1' is input
+    } 
     return;
 }
 /*---------------------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -291,16 +293,15 @@ void task5(void) {
             }
         }
     }
-    static int z = 0;                                                                           //option to return to main menu
-    do {
-        printf("\nEnter 1 to return to the main menu or enter anything else to exit the program:\n   Selction: ");
-        scanf("%d", &z);
-        if(z == 1)  {
-            menu();
-        } else  {
-            exit(0);
-        }
-    } while(z != 1);  
+//Option to return to the menu:
+    static int z = 0;                                                                           //a static variable used to store the user's 
+    printf("Enter 1 to return to the main menu or enter anything else to exit the program.\n   Selction: ");    //a prompt to the user to make a choice to return to the menu or to quit the program
+    scanf("%d", &z);                                                                            //writes the input selection to the static variable, 'z'
+    if(z == 1)  {                                                                               //checks if the input was '1'
+        menu();                                                                                 //calls the menu function
+    } else  {
+        exit(0);                                                                                //quits the program if anything other than '1' is input
+    } 
     return;
 }
 /*---------------------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -348,17 +349,15 @@ void task6(void) {
     }
     printf("\n%d", b);
     printf("\nThe decrypted message reads: %s\n\n", str);
-    
-    static int z = 0;                                                                           //option to return to main menu
-    do {
-        printf("Enter 1 to return to the main menu or enter anything else to exit the program:\n   Selction: ");
-        scanf("%d", &z);
-        if(z == 1)  {
-            menu();
-        } else{
-            exit(0);
-        }
-    } while(z != 1);  
+//Option to return to the menu:
+    static int z = 0;                                                                           //a static variable used to store the user's 
+    printf("Enter 1 to return to the main menu or enter anything else to exit the program.\n   Selction: ");    //a prompt to the user to make a choice to return to the menu or to quit the program
+    scanf("%d", &z);                                                                            //writes the input selection to the static variable, 'z'
+    if(z == 1)  {                                                                               //checks if the input was '1'
+        menu();                                                                                 //calls the menu function
+    } else  {
+        exit(0);                                                                                //quits the program if anything other than '1' is input
+    } 
     return;
 }
 /*---------------------------------------------------------------------------------------------------------------------------------------------------------------*/
