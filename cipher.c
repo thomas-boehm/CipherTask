@@ -176,8 +176,8 @@ void task3(void) {
     }  
     for(k = 0; k < strlen(str); k++)    {                                                       //for each letter of the input text                                                         
         for(i = 0; i < 26; i++) {                                                               //for each letter of the alphabet
-            if(str[k] == alph[i])   {                                                           //checks if a given letter of the input text matches a letter from the alphabet
-                str[k] = key[i];                                                                //if so, assigns this letter to the new letter at that point in the alphabet, dictated by the input key
+            if(str[k] == alph[i])   {                                                           //checks if a given letter of the input text, 'str[]' matches a letter from the alphabet, 'alp[]'
+                str[k] = key[i];                                                                //if so, assigns this letter to the new letter at that point in the alphabet, dictated by the input key, 'key[]'
                 break;                                                                          //stops checking for that letter and moves onto the next
             }
         }
@@ -196,32 +196,34 @@ void task3(void) {
 }
 /*---------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 // 4. Substitution decryption (given text & key);
+/*This function has no arguments and no return value(s). This function is designed to decrypt a given text via a substituion cipher using a given key in the form of
+  a rearranged alphabet (e.g. POIUYTREWQASDFGHJKLMNBVCXZ). When called from the menu, the name of the task is displayed at the top of the screen and the user is
+  prompted with a request to enter the text they wish to decrypt, followed by the key. The decrypted text is then displayed back to the user. This decryption only
+  changes letters, and therefore, numbers and punctuation are ignored. Additionally the program will read both lower and upper-case, however, any input text will be
+  converted to upper-case, and subsequently, all output text will be in upper-case, also.*/
 void task4(void)    {
-    int i, k;                                                                                   //counters
-    char str[100];                                                                              //input text to be decrypted
-    char key[26];                                                                               //input key for decryption
+    int i, k;                                                                                   //'i' and 'k' are both used as counters
+    char str[100];                                                                              //used to store the input string (maximum length of 100 characters)
+    char key[26];                                                                               //used to store the input key as a rearranged alphabet
     char alph[27] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'}; //regular alphabet
     printf("Task 4: Decryption of text encrypted via a subtitution cipher, given the text and the key.\n\n"); //a reminder of what this task does
     printf("Enter the text you wish to decrypt.\n   Text: ");                                   //a prompt to enter text for decryption
     scanf(" %[^\n]%*c", str);                                                                   //reads input text and assigns it to "str[]"
     printf("\nNow enter a key as a rearranged alphabet (e.g. QWERTYUIOPLKJHGFDSAZXCVBNM).\n   Key: ");    //a prompt to enter a key as a rearranged alphabet
     scanf("%s", key);                                                                           //reads input text and assigns it to "key[]"
-    for(i = 0; a < strlen(str); i++)                                                            //converts each letter of the input string to a capital letter
+    for(i = 0; i < strlen(str); i++)   {                                                        //converts each letter of the input string and the key to a capital letter
         str[i] = toupper(str[i]);
-    for(i = 0; i < 26; i++) {
-        if(key[i] >= 97 && key[i] <= 122)   {
-            key[i] -= 32;
-        }
-    }
-    for(k = 0; k < strlen(str); k++)    {                                                               
-        for(i = 0; i < 26; i++) { 
-            if(str[k] == key[i])   {                                                    //checks if a given letter of the input text, "str[]" matches a letter from the key, "key[]"
-                str[k] = alph[i];                                                       //if so, assigns this letter to the old letter at that point in the alphabet, dictated by the alphabet string, "alph[]"
-                break;
+        key[i] = toupper(key[i]);
+    } 
+    for(k = 0; k < strlen(str); k++)    {                                                       //for each letter of the input text                                    
+        for(i = 0; i < 26; i++) {                                                               //for each letter of the alphabet
+            if(str[k] == key[i])   {                                                            //checks if a given letter of the input text, 'str[]' matches a letter from the key, 'key[]'
+                str[k] = alph[i];                                                               //if so, assigns this letter to the old letter at that point in the alphabet, dictated by the alphabet string, 'alph[]'
+                break;                                                                          //stops checking for that letter and moves onto the next
             }
         }
     }
-    printf("\nThe decrypted text reads: %s\n\n", str);
+    printf("\nThe decrypted text reads: %s\n\n", str);                                          //prints the decrypted message
 //Option to return to the menu:
     static int a = 0;                                                                           //a static variable used to store the user's 
     printf("Enter 1 to return to the main menu or enter anything else to exit the program.\n   Selction: ");    //a prompt to the user to make a choice to return to the menu or to quit the program
